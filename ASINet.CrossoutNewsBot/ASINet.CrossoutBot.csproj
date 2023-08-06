@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ASiNet.Crossout.Core\ASiNet.Crossout.Core.csproj" />
+    <ProjectReference Include="..\ASiNet.Crossout.Logger\ASiNet.Crossout.Logger.csproj" />
+  </ItemGroup>
+
+</Project>
