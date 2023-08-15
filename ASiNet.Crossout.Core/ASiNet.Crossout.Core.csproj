@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ASiNet.CrossoutDB.API\ASiNet.CrossoutDB.API\ASiNet.CrossoutDB.API.csproj" />
     <ProjectReference Include="..\ASiNet.Crossaut.DB\ASiNet.Crossaut.DB.csproj" />
     <ProjectReference Include="..\ASiNet.Crossout.Logger\ASiNet.Crossout.Logger.csproj" />
     <ProjectReference Include="..\ASiNet.Crossout.NewsParser\ASiNet.Crossout.NewsParser.csproj" />

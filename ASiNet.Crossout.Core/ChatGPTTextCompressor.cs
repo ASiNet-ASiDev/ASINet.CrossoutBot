@@ -2,21 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ASiNet.Crossout.Logger;
 using OpenAI_API;
 
 namespace ASiNet.Crossout.Core;
-public class ChatGPTTextCompressor
+public partial class ChatGPTTextCompressor
 {
-    public ChatGPTTextCompressor(string token, string apiUri)
+    public ChatGPTTextCompressor(BotConfig config)
     {
-        _api = new OpenAIAPI(token) { ApiUrlFormat = apiUri };
+        Config = config;
+        _api = new OpenAIAPI(Config.ChatGptToken) { ApiUrlFormat = Config.ChatGptAddress };
     }
 
-    public int MaxOutputLength { get; set; } = 500; 
-
+    public BotConfig Config { get; init; }
     private OpenAIAPI _api;
+
     public async Task<string> Compress(string input)
     {
         Log.InfoLog("Text_Compressor_GPT: Compress...");
@@ -26,7 +28,7 @@ public class ChatGPTTextCompressor
             var chat = _api.Chat.CreateConversation();
 
             var sb = new StringBuilder();
-            chat.AppendUserInput($"Сократи текст в 4 раза: {output}");
+            chat.AppendUserInput(ReplaceCommmmaanndd().Replace(Config.ChatGPTCommand, output));
 
             await foreach (var res in chat.StreamResponseEnumerableFromChatbotAsync())
                 sb.Append(res);
@@ -36,10 +38,10 @@ public class ChatGPTTextCompressor
 
             var i = 1;
 
-            while (i <= 5 && (output.Length > MaxOutputLength))
+            while (i <= 5 && output.Length > Config.MaxTextLength)
             {
                 sb = new StringBuilder();
-                chat.AppendUserInput($"Сократи ещё");
+                chat.AppendUserInput(Config.ChatGPTIterationCommand);
 
                 await foreach (var res in chat.StreamResponseEnumerableFromChatbotAsync())
                     sb.Append(res);
@@ -58,4 +60,6 @@ public class ChatGPTTextCompressor
         }
     }
 
+    [GeneratedRegex("\\$text")]
+    private static partial Regex ReplaceCommmmaanndd();
 }

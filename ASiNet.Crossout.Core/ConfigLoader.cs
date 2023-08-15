@@ -46,11 +46,14 @@ public static class ConfigLoader
             if (result == null)
                 throw new Exception("Config is corrupted!");
 
-            if(result.ChatGptAddress == string.Empty)
-                throw new Exception($"[{nameof(BotConfig.ChatGptAddress)}]: Is not set!");
+            if(result.UseChatGPT)
+            {
+                if (result.ChatGptAddress == string.Empty)
+                    throw new Exception($"[{nameof(BotConfig.ChatGptAddress)}]: Is not set!");
 
-            if (result.ChatGptToken == string.Empty)
-                throw new Exception($"[{nameof(BotConfig.ChatGptToken)}]: Is not set!");
+                if (result.ChatGptToken == string.Empty)
+                    throw new Exception($"[{nameof(BotConfig.ChatGptToken)}]: Is not set!");
+            }
 
             if (result.TelegramChannelName == string.Empty || result.TelegramChannelName.FirstOrDefault() != '@')
                 throw new Exception($"[{nameof(BotConfig.TelegramChannelName)}]: Is not set or incorrect format[correct: @channel_name]!");

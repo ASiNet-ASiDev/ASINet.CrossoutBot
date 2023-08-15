@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ASiNet.Crossaut.DB;
 
-public class CrossautNewsDBContext : DbContext
+public class CrossoutNewsDBContext : DbContext
 {
 
     public DbSet<DbImageUri> Images { get; set; } = null!;
